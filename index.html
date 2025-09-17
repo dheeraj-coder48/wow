@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plantopedia — Modern Plant Encyclopedia</title>
+  <meta name="description"
+    content="Plantopedia — discover plants, their care, and tips. Live search, favorites, gallery, daily tips, share, and offline support." />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,600;0,800;1,400&family=Playfair+Display:wght@600;700&family=Poppins:wght@600;700&display=swap"
+    rel="stylesheet">
+  <!-- <link rel="stylesheet" href="/css/index.css"> -->
+  <style>
+    :root {
+  --bg-1: #f7fdf7;
+  --bg-2: #eef8ee;
+  --leaf-1: #2d6b35;
+  --leaf-2: #66b26b;
+  --accent: #3aa76a;
+  --muted: #2f4f3a;
+  --muted-2: #5f7b66;
+  --card: #ffffff;
+  --glass: rgba(255, 255, 255, 0.84);
+  --radius: 18px;
+  --shadow-lg: 0 30px 80px rgba(29, 72, 40, 0.12);
+  --shadow-md: 0 12px 30px rgba(29, 72, 40, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
+    "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+/* Header */
+header {
+  min-height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 130;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 20px;
+  background: linear-gradient(180deg, #f1fbf1, #eaf7ea);
+  border-bottom: 1px solid rgba(45, 107, 53, 0.06);
+  box-shadow: 0 8px 30px rgba(34, 70, 36, 0.06);
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--leaf-1), var(--leaf-2));
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 800;
+  font-family: Playfair Display, serif;
+  font-size: 18px;
+  box-shadow: 0 8px 20px rgba(16, 56, 28, 0.08);
+}
+.brand .title {
+  color: var(--leaf-1);
+  font-weight: 800;
+  font-family: Poppins, sans-serif;
+  letter-spacing: -0.5px;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+nav a {
+  color: var(--muted-2);
+  text-decoration: none;
+  font-weight: 700;
+  position: relative;
+  padding: 8px 6px;
+  border-radius: 6px;
+  transition: color 0.18s ease, transform 0.12s ease;
+}
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  bottom: 6px;
+  height: 3px;
+  width: 60%;
+  background: linear-gradient(90deg, var(--leaf-1), var(--leaf-2));
+  border-radius: 4px;
+  transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+nav a:hover {
+  color: var(--leaf-1);
+  transform: translateY(-3px);
+}
+nav a:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.header-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.h-btn {
+  background: transparent;
+  border: 1px solid rgba(45, 107, 53, 0.08);
+  color: var(--leaf-1);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.16s ease, box-shadow 0.16s;
+}
+.h-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 8px;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--leaf-1);
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+.mobile-menu {
+  display: none;
+  width: 100%;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 12px;
+  box-shadow: var(--shadow-md);
+}
+.mobile-menu.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+.mobile-menu a {
+  display: block;
+  padding: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: 8px;
+}
+.mobile-menu a:hover {
+  background: rgba(102, 178, 107, 0.1);
+}
+
+/* College logo */
+.college_logo {
+  position: absolute;
+  top: 10px;   /* adjust vertical position */
+  left: 10px;  /* adjust horizontal position */
+  width: 420px; /* adjust size */
+  height: 120px;
+  z-index: 5; /* make sure it’s above background but not blocking menu */
+  pointer-events: none; /* so clicks pass through, optional */
+}
+
+/* Hero */
+.hero {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -6%;
+  width: 120vw;
+  height: 120vh;
+  background-image: url("https://media.istockphoto.com/id/939833264/photo/natural-parks-and-blue-sky.jpg?s=2048x2048&w=is&k=20&c=XSEMh3Saamx1kvSU4p2wIqwWKjFoEuenWstYs9Ameis=");
+  background-size: cover;
+  background-position: center top;
+  filter: blur(6px) saturate(120%) contrast(95%);
+  opacity: 0.96;
+  z-index: 0;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 8%,
+    rgba(255, 255, 255, 0.86) 68%
+  );
+  pointer-events: none;
+}
+
+/* Glass Card */
+.glass {
+  position: relative;
+  z-index: 6;
+  width: min(92vw, 820px);
+  max-width: 820px;
+  padding: 30px 32px;
+  border-radius: var(--radius);
+  background: var(--glass);
+  border: 1px solid rgba(34, 70, 36, 0.06);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  margin: 0 auto;
+  align-self: center;
+  justify-self: center;
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+  max-height: 80vh;
+}
+.glass h1 {
+  font-family: "Playfair Display", serif;
+  margin: 0 0 6px;
+  color: var(--leaf-1);
+  font-size: clamp(26px, 4.4vw, 40px);
+}
+.glass .tagline {
+  color: var(--muted-2);
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+/* Quote */
+.quote-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  min-height: 48px;
+}
+.quote {
+  font-style: italic;
+  color: var(--leaf-1);
+  max-width: 72%;
+  font-size: 15px;
+}
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid rgba(34, 70, 36, 0.08);
+  border-top-color: var(--leaf-1);
+  animation: spin 1s linear infinite;
+}
+
+/* Search */
+.search {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 6px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.search.active {
+  width: 100%;
+}
+.search input {
+  flex: 1;
+  min-width: 180px;
+  width: 420px;
+  border: 1px solid rgba(34, 70, 36, 0.16);
+  border-radius: 999px;
+  outline: none;
+  background: transparent;
+  color: var(--leaf-1);
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: inset 0 4px 12px rgba(34, 70, 36, 0.03);
+  transition: all 0.3s ease;
+}
+.search input::placeholder {
+  color: rgba(47, 79, 56, 0.5);
+}
+.search input:focus {
+  box-shadow: 0 6px 24px rgba(34, 70, 36, 0.08),
+    0 0 0 6px rgba(102, 178, 107, 0.08);
+}
+
+.btn {
+  position: relative;
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  background: linear-gradient(90deg, var(--leaf-1), var(--leaf-2));
+  box-shadow: 0 10px 26px rgba(34, 70, 36, 0.12);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  transform: translateY(-4px);
+}
+.btn .ripple {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.btn .ripple span {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: scale(0);
+  background: rgba(255, 255, 255, 0.92);
+  animation: ripple 0.62s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.chips {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(34, 70, 36, 0.04),
+    rgba(102, 178, 107, 0.02)
+  );
+  color: var(--leaf-1);
+  font-weight: 800;
+  cursor: pointer;
+  border: 1px solid rgba(34, 70, 36, 0.04);
+  transition: transform 0.14s ease;
+}
+.chip:hover {
+  transform: translateY(-4px);
+}
+
+/* Suggestions */
+.suggest {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 58px;
+  z-index: 22;
+  display: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.suggest.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+.suggest ul {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  border-radius: 10px;
+  background: var(--card);
+  border: 1px solid rgba(34, 70, 36, 0.06);
+  box-shadow: 0 10px 30px rgba(29, 72, 40, 0.06);
+}
+.suggest li {
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted-2);
+  border-radius: 8px;
+}
+.suggest li:hover,
+.suggest li[aria-selected="true"] {
+  background: linear-gradient(
+    90deg,
+    rgba(102, 178, 107, 0.08),
+    rgba(150, 210, 150, 0.03)
+  );
+  color: var(--leaf-1);
+}
+
+/* Modal */
+dialog {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(6px);
+}
+.result-card {
+  width: min(92vw, 860px);
+  max-height: 90vh;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--card);
+  color: var(--leaf-1);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  transform-origin: center;
+  animation: pop 0.28s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+  transition: transform 0.3s ease;
+}
+.result-card:hover {
+  transform: translateY(-5px);
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+@media (max-width: 900px) {
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.result-media {
+  background: linear-gradient(180deg, #f8fff8, #eefaf0);
+  min-height: 360px;
+  position: relative;
+}
+.result-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-height: 50vh;
+  border-radius: 0 0 16px 16px;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+.result-media img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+}
+
+.result-body {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+.result-body h3 {
+  margin: 0 0 6px;
+  font-family: "Playfair Display", serif;
+  font-size: 1.6rem;
+  color: var(--leaf-1);
+}
+.meta {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0 12px;
+  flex-wrap: wrap;
+}
+.badge {
+  background: linear-gradient(180deg, #f3fbf3, #eaf7e6);
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: var(--leaf-1);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+.badge:hover {
+  background: linear-gradient(180deg, #eaf7e6, #d9f0d9);
+}
+.desc {
+  color: var(--muted-2);
+  margin-top: 6px;
+  transition: color 0.3s ease;
+}
+.desc:hover {
+  color: var(--leaf-1);
+}
+
+/* Plant Details */
+.plant-section {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 12px rgba(29, 72, 40, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.plant-section:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(29, 72, 40, 0.08);
+}
+.plant-section h4 {
+  margin: 0 0 8px;
+  color: var(--leaf-1);
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+.plant-section h4:hover {
+  color: var(--leaf-2);
+}
+.plant-section h4 svg {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+.plant-section h4:hover svg {
+  transform: rotate(15deg);
+}
+.plant-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+.plant-detail {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.plant-detail:hover {
+  transform: scale(1.02);
+  background: #f9fff9;
+}
+.plant-detail h5 {
+  margin: 0 0 4px;
+  color: var(--leaf-1);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.plant-detail p {
+  margin: 0;
+  color: var(--muted-2);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* Lists */
+.list-card {
+  width: min(92vw, 860px);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card);
+  color: var(--leaf-1);
+  box-shadow: var(--shadow-lg);
+  padding: 16px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.list-card h3 {
+  margin: 8px 0 16px;
+  font-family: "Playfair Display", serif;
+  font-size: 1.6rem;
+}
+
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 8px;
+}
+
+.list-item {
+  background: linear-gradient(180deg, #f8fff8, #f3fbf3);
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.list-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.list-item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.list-item:hover img {
+  transform: scale(1.05);
+}
+
+.list-item .item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.list-item .item-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--leaf-1);
+}
+
+.list-item .item-info {
+  font-size: 0.85rem;
+  color: var(--muted-2);
+  line-height: 1.3;
+}
+
+.list-item .item-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.list-item .view-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, var(--leaf-1), var(--leaf-2));
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.list-item .view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(29, 72, 40, 0.12);
+}
+
+.list-item .heart-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(34, 70, 36, 0.08);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.list-item .heart-btn.favorited {
+  background: linear-gradient(90deg, var(--leaf-1), var(--leaf-2));
+  color: white;
+}
+
+.list-item .heart-btn:hover {
+  transform: scale(1.1);
+}
+
+.list-empty {
+  color: var(--muted-2);
+  text-align: center;
+  padding: 20px;
+  font-size: 1rem;
+}
+
+/* Image Preview Modal */
+.image-card {
+  width: min(90vw, 600px);
+  max-height: 80vh;
+  border-radius: 16px;
+  overflow: hidden;
+  /* background: var(--card); */
+  background: linear-gradient(180deg, #f1fbf1, #eaf7ea);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  transform-origin: center;
+  animation: pop 0.28s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+  z-index: 200; /* Ensures it appears above plant modal */
+}
+
+.image-container {
+  max-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.image-container img:hover {
+  transform: scale(1.02);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 0;
+  background: white;
+  border-top: 1px solid rgba(34, 70, 36, 0.06);
+}
+.small-btn {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 800;
+  transition: all 0.3s ease;
+}
+.small-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(29, 72, 40, 0.12);
+}
+.fav {
+  background: linear-gradient(90deg, var(--leaf-1), var(--leaf-2));
+  color: white;
+}
+.share {
+  background: transparent;
+  border: 1px solid rgba(34, 70, 36, 0.08);
+  color: var(--leaf-1);
+}
+.wiki {
+  background: linear-gradient(90deg, #eefbf0, #e6f7e6);
+  color: var(--leaf-1);
+  border: 1px solid rgba(34, 70, 36, 0.08);
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  background: #ffffff;
+  color: var(--leaf-1);
+  font-weight: 800;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+.close:hover {
+  transform: scale(1.1);
+  background: #ff0000;
+  color: white;
+}
+
+/* Tip */
+.tip {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 24px;
+  z-index: 140;
+  background: linear-gradient(90deg, var(--leaf-1), var(--leaf-2));
+  color: white;
+  padding: 12px 18px;
+  border-radius: 999px;
+  box-shadow: 0 18px 50px rgba(29, 72, 40, 0.12);
+  font-weight: 700;
+  max-width: 86vw;
+  text-align: center;
+}
+
+/* Floating Buttons */
+.floating-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 150;
+}
+.float-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--leaf-1), var(--leaf-2));
+  color: white;
+  font-weight: 800;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 0.9;
+  position: relative;
+  overflow: hidden;
+}
+.float-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(29, 72, 40, 0.2);
+  opacity: 1;
+  animation: leaf-glow 1s ease-in-out infinite alternate;
+}
+.float-btn:active {
+  transform: scale(0.95);
+}
+.float-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+  transition: transform 0.3s ease;
+}
+.float-btn:hover svg {
+  transform: rotate(15deg) scale(1.2);
+}
+.float-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.float-btn:hover::before {
+  opacity: 1;
+}
+.float-btn::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  background: radial-gradient(
+    circle,
+    rgba(102, 178, 107, 0.15) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.float-btn:hover::after {
+  opacity: 1;
+  transform: scale(1.1);
+}
+@keyframes leaf-glow {
+  0% {
+    box-shadow: 0 0 10px rgba(102, 178, 107, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(102, 178, 107, 0.6);
+  }
+}
+
+/* Animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ripple {
+  to {
+    transform: scale(15);
+    opacity: 0;
+  }
+}
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(0.5);
+    opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Floating Heart */
+.floating-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  /* (or z-index: 2147483647;) */
+  animation: floatUp 1.2s ease-out forwards;
+  font-size: 32px;
+  color: #ff0000;
+  visibility: visible;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+
+
+
+
+/* Chatbot Styles */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 160px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--leaf-1), var(--leaf-2));
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    .chatbot-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(29, 72, 40, 0.2);
+      animation: leaf-glow 1s ease-in-out infinite alternate;
+    }
+    
+    .chatbot-btn svg {
+      width: 30px;
+      height: 30px;
+    }
+    
+    .chatbot-modal {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 380px;
+      height: 500px;
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      z-index: 200;
+      overflow: hidden;
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    
+    .chatbot-modal.active {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .chat-header {
+      padding: 16px 20px;
+      background: linear-gradient(180deg, #f1fbf1, #eaf7ea);
+      border-bottom: 1px solid rgba(45, 107, 53, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .chat-header h3 {
+      margin: 0;
+      color: var(--leaf-1);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    
+    .close-chat {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--muted-2);
+    }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      line-height: 1.4;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .message.bot {
+      align-self: flex-start;
+      background: linear-gradient(180deg, #f3fbf3, #eaf7e6);
+      color: var(--muted);
+      border-bottom-left-radius: 4px;
+    }
+    
+    .message.user {
+      align-self: flex-end;
+      background: linear-gradient(90deg, var(--leaf-1), var(--leaf-2));
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    
+    .chat-input {
+      padding: 16px;
+      border-top: 1px solid rgba(45, 107, 53, 0.1);
+      display: flex;
+      gap: 8px;
+    }
+    
+    .chat-input input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid rgba(45, 107, 53, 0.16);
+      border-radius: 999px;
+      outline: none;
+      font-size: 14px;
+    }
+    
+    .chat-input button {
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(90deg, var(--leaf-1), var(--leaf-2));
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      background: linear-gradient(180deg, #f3fbf3, #eaf7e6);
+      border-radius: 18px;
+      align-self: flex-start;
+      color: var(--muted-2);
+      font-size: 14px;
+    }
+    
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--muted-2);
+      border-radius: 50%;
+      animation: typingAnimation 1.4s infinite ease-in-out;
+    }
+    
+    .typing-dot:nth-child(1) { animation-delay: 0s; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes typingAnimation {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+    
+    @media (max-width: 640px) {
+      .chatbot-btn {
+        right: 24px;
+        bottom: 100px;
+      }
+      
+      .chatbot-modal {
+        right: 10px;
+        bottom: 160px;
+        width: calc(100vw - 20px);
+        max-width: 380px;
+        height: 60vh;
+      }
+    }
+
+
+
+/* Responsive */
+@media (max-width: 900px) {
+  header {
+    padding: 10px 14px;
+  }
+  .brand .title {
+    font-size: 16px;
+  }
+  .logo {
+    width: 44px;
+    height: 44px;
+  }
+  .glass {
+    width: 92vw;
+    padding: 20px;
+  }
+  .search input {
+    width: 240px;
+  }
+  .result-grid {
+    grid-template-columns: 1fr;
+    max-height: 85vh;
+  }
+  .result-body {
+    max-height: 50vh;
+  }
+}
+@media (max-width: 640px) {
+  header {
+    justify-content: space-between;
+  }
+  nav {
+    display: none;
+  }
+  .header-controls .h-btn {
+    display: none;
+  }
+  .glass {
+    padding: 18px;
+  }
+  .search input {
+    width: 100%;
+  }
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+  .hamburger {
+    display: block;
+  }
+  .plant-grid {
+    grid-template-columns: 1fr;
+  }
+  .floating-buttons {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search input {
+    width: 100%;
+  }
+  .btn {
+    width: 100%;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">P</div>
+      <div>
+        <div class="title" style="font-size:18px">Plantopedia</div>
+        <div style="font-size:12px;color:var(--muted-2);font-weight:700">Plant Encyclopedia</div>
+      </div>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav aria-label="Main nav" id="mainNav">
+      <a href="#" id="navHome">Home</a>
+      <a href="/about.html" id="navAbout">About</a>
+      <a href="/services.html" id="navServices">Services</a>
+      <a href="/contact.html" id="navContact">Contact</a>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#" id="mobileHome">Home</a>
+      <a href="/about.html" id="mobileAbout">About</a>
+      <a href="/services.html" id="mobileServices">Services</a>
+      <a href="/contact.html" id="mobileContact">Contact</a>
+      <a href="#" id="mobileAllPlants">All Plants</a>
+      <a href="#" id="mobileFavorites">Favorites</a>
+    </div>
+  </header>
+
+  <section class="hero" aria-label="Hero">
+    <img src="MVLUCollege-Logo-final.png" alt="college_logo" class="college_logo">
+    <div class="glass" role="region" aria-labelledby="site-title">
+      <h1 id="site-title">Discover the Beauty of Plants</h1>
+      <div class="quote-wrap" aria-live="polite">
+        <div id="quoteSpinner" class="spinner" aria-hidden="true"></div>
+        <div id="plantQuote" class="quote">Loading a lovely nature quote…</div>
+      </div>
+      <div class="search" role="search" id="searchContainer">
+        <input id="searchInput" type="search" placeholder='Try "rose", "aloe", "tulip", "sunflower"...'
+          aria-label="Search plants by name" autocomplete="off">
+        <button id="searchBtn" class="btn" aria-label="Search">Search<span class="ripple"
+            aria-hidden="true"></span></button>
+        <div id="suggest" class="suggest" aria-hidden="true">
+          <ul id="suggestList" role="listbox" aria-label="Suggestions"></ul>
+        </div>
+      </div>
+      <div class="chips" aria-hidden="false" style="margin-top:12px">
+        <button class="chip" data-q="rose">Rose</button>
+        <button class="chip" data-q="aloe">Aloe Vera</button>
+        <button class="chip" data-q="tulip">Tulip</button>
+        <button class="chip" data-q="sunflower">Sunflower</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plant Modal -->
+  <dialog id="plantModal" aria-hidden="true">
+    <article class="result-card" role="dialog" aria-modal="true" aria-labelledby="plantTitle">
+      <button class="close" id="closeModal" aria-label="Close">✕</button>
+      <div class="result-grid">
+        <div class="result-media" id="resultMedia">
+          <img id="plantImg" alt="Plant image" src="" loading="lazy">
+        </div>
+        <div class="result-body">
+          <h3 id="plantTitle">Plant</h3>
+          <div class="meta">
+            <div class="badge" id="plantSci">Scientific: —</div>
+            <div class="badge" id="plantFamily">Family: —</div>
+            <div class="badge" id="plantType">Type: —</div>
+          </div>
+          <p class="desc" id="plantDesc">—</p>
+          <div class="plant-section">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              Origin & Native Region
+            </h4>
+            <p id="plantOrigin">—</p>
+          </div>
+          <div class="plant-section">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
+                <path d="M8.5 8.5v.01"></path>
+                <path d="M16 15.5v.01"></path>
+                <path d="M12 12v.01"></path>
+                <path d="M11 17v.01"></path>
+                <path d="M7 14v.01"></path>
+              </svg>
+              Growing Conditions
+            </h4>
+            <div class="plant-grid">
+              <div class="plant-detail">
+                <h5>Light</h5>
+                <p id="plantLight">—</p>
+              </div>
+              <div class="plant-detail">
+                <h5>Water</h5>
+                <p id="plantWater">—</p>
+              </div>
+              <div class="plant-detail">
+                <h5>Soil Type</h5>
+                <p id="plantSoil">—</p>
+              </div>
+              <div class="plant-detail">
+                <h5>Temperature</h5>
+                <p id="plantTemp">—</p>
+              </div>
+            </div>
+          </div>
+          <div class="plant-section">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              Propagation
+            </h4>
+            <p id="plantPropagation">—</p>
+          </div>
+          <div class="plant-section">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"></path>
+                <line x1="8" y1="1" x2="8" y2="4"></line>
+                <line x1="12" y1="1" x2="12" y2="4"></line>
+                <line x1="16" y1="1" x2="16" y2="4"></line>
+              </svg>
+              Uses
+            </h4>
+            <p id="plantUses">—</p>
+          </div>
+          <div class="plant-section">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                </path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              Toxicity
+            </h4>
+            <p id="plantToxicity">—</p>
+          </div>
+          <div class="plant-section">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              Care Tips
+            </h4>
+            <p id="plantCareTips">—</p>
+          </div>
+          <div class="plant-section">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+              </svg>
+              Flowering/Fruit Season
+            </h4>
+            <p id="plantSeason">—</p>
+          </div>
+          <div class="plant-section">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              Fun Facts
+            </h4>
+            <p id="plantFunFacts">—</p>
+          </div>
+          <div class="actions">
+            <button id="favBtn" class="small-btn fav">Add to Favorites</button>
+            <button id="shareBtn" class="small-btn share">Share</button>
+            <button id="wikiBtn" class="small-btn wiki">Wikipedia</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  </dialog>
+
+  <!-- Image Preview Modal -->
+<dialog id="imageModal" aria-hidden="true">
+  <article class="image-card" role="dialog" aria-modal="true" aria-labelledby="imageTitle">
+    <button class="close" id="closeImageModal" aria-label="Close">✕</button>
+    <div class="image-container">
+      <img id="previewImg" alt="Plant image preview" src="" loading="lazy">
+    </div>
+  </article>
+</dialog>
+
+  <!-- Favorites Modal -->
+<dialog id="favModal">
+  <div class="list-card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h3>Your Favorites</h3>
+      <button id="closeFav" class="h-btn">Close</button>
+    </div>
+    <div id="favGrid" class="list-grid">
+      <div class="list-empty">No favorites yet — add plants from the modal.</div>
+    </div>
+  </div>
+</dialog>
+
+<!-- All Plants Modal -->
+<dialog id="allModal">
+  <div class="list-card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h3>All Plants</h3>
+      <button id="closeAll" class="h-btn">Close</button>
+    </div>
+    <div id="allGrid" class="list-grid"></div>
+  </div>
+</dialog>
+
+  <!-- Tip -->
+  <div id="tip" class="tip" aria-live="polite" hidden>—</div>
+
+  <!-- Floating Buttons -->
+  <div class="floating-buttons" aria-label="Quick actions">
+    <button id="allPlantsBtn" class="float-btn" aria-label="View all plants">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path
+          d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+        </path>
+        <path d="M3.27 6.96L12 12.01l8.73-5.05"></path>
+        <path d="M12 22.08V12"></path>
+      </svg>
+      All Plants
+    </button>
+    <button id="favListBtn" class="float-btn" aria-label="View favorites">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path
+          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+        </path>
+      </svg>
+      Favorites
+    </button>
+  </div>
+
+
+
+
+
+<button class="chatbot-btn" id="chatbotBtn" aria-label="Open plant chatbot">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </button>
+  
+  <!-- Add the chatbot modal -->
+  <div class="chatbot-modal" id="chatbotModal">
+    <div class="chat-header">
+      <h3>Plant Assistant</h3>
+      <button class="close-chat" id="closeChat">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message bot">
+        Hi there! I'm your plant assistant. Ask me anything about plants, gardening, or plant care!
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Ask about plants..." autocomplete="off">
+      <button id="sendMessage">Send</button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <script src="/js/index.js"></script> -->
+   <script>
+    /* Plant Data */
+const PLANTS = {
+  rose: {
+    name: 'Rose',
+    key: 'rose',
+    sci: 'Rosa',
+    family: 'Rosaceae',
+    type: 'Shrub',
+    height: '1–3 m',
+    origin: 'Asia, Europe, North America',
+    light: 'Full sun (6+ hours daily)',
+    water: 'Water deeply once a week; more often in extreme heat or dry conditions',
+    soil: 'Well-draining, loamy soil with pH 6.0-7.0',
+    temp: '60-75°F (15-24°C) ideal, can tolerate -30°F (-34°C) when dormant',
+    propagation: 'Stem cuttings, grafting, seeds',
+    uses: 'Ornamental, perfumery, culinary (rose water, petals in salads)',
+    toxicity: 'Non-toxic to humans, mild stomach upset if ingested in large quantities. Some varieties may have thorns.',
+    careTips: 'Prune in early spring, deadhead spent blooms, mulch to retain moisture, fertilize monthly during growing season',
+    season: 'Spring to fall (varies by variety), some bloom continuously',
+    funFacts: 'Roses have been cultivated for over 5,000 years. The oldest living rose is over 1,000 years old and grows on a wall of Hildesheim Cathedral in Germany.',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg',
+    desc: 'Classic flowering shrub prized for its beauty and fragrance. With over 300 species and thousands of cultivars, roses come in many colors and forms, from compact miniatures to climbing varieties.'
+  },
+  lotus: {
+    name: 'Lotus',
+    key: 'lotus',
+    sci: 'Nelumbo nucifera',
+    family: 'Nelumbonaceae',
+    type: 'Aquatic perennial',
+    height: '1–1.5 m (emergent leaves can reach above water)',
+    origin: 'Asia, Australia',
+    light: 'Full sun (6–8 hours daily)',
+    water: 'Requires standing water 2–12 inches deep; keep soil consistently submerged',
+    soil: 'Rich loamy or clay soil; avoid sandy soil',
+    temp: '75–85°F (24–29°C) ideal; dormant below 50°F (10°C)',
+    propagation: 'Seeds, rhizome division',
+    uses: 'Ornamental in ponds, sacred in cultural/religious traditions, edible parts (seeds, rhizomes, young leaves)',
+    toxicity: 'Non-toxic; considered safe and edible in many cultures',
+    careTips: 'Plant in wide, shallow containers with heavy soil, fertilize monthly during growing season, protect from strong winds, overwinter indoors in cold climates',
+    season: 'Summer blooming (June–August, depending on climate)',
+    funFacts: 'Lotus seeds can remain viable for over 1,000 years. The flower is a sacred symbol in Hinduism and Buddhism, representing purity and enlightenment.',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg',
+    desc: 'The lotus is a revered aquatic plant known for its large, fragrant flowers and round leaves that float or rise above the water. Symbolic in many cultures, it is also valued for its edible seeds and rhizomes.'
+  },
+  aloe: {
+    name: 'Aloe Vera',
+    key: 'aloe',
+    sci: 'Aloe vera',
+    family: 'Asphodelaceae',
+    type: 'Succulent',
+    height: '24–39 in',
+    origin: 'Arabian Peninsula',
+    light: 'Bright, indirect light (south or west window ideal)',
+    water: 'Biweekly (let soil dry completely between waterings)',
+    soil: 'Cactus/succulent mix with excellent drainage',
+    temp: '55-80°F (13-27°C), protect from frost',
+    propagation: 'Pups (offsets), leaf cuttings',
+    uses: 'Medicinal (skin burns, wounds), ornamental, cosmetic products',
+    toxicity: 'Mildly toxic to cats and dogs if ingested (can cause vomiting)',
+    careTips: 'Avoid overwatering, repot when rootbound, wipe leaves to remove dust',
+    season: 'Summer blooms (yellow/orange flowers on tall stalks)',
+    funFacts: 'Aloe vera has been used medicinally for over 6,000 years. Cleopatra reportedly used it in her beauty regimen.',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/%E0%A6%98%E0%A7%83%E0%A6%A4%E0%A6%95%E0%A7%81%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%80_-Aleo_vera_-.jpg/640px-%E0%A6%98%E0%A7%83%E0%A6%A4%E0%A6%95%E0%A7%81%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%80_-Aleo_vera_-.jpg',
+    desc: 'Low-maintenance succulent known for its soothing gel. The thick, fleshy leaves contain a clear gel that has been used for centuries to treat burns and skin irritations.'
+  },
+  tulip: {
+    name: 'Tulip',
+    key: 'tulip',
+    sci: 'Tulipa',
+    family: 'Liliaceae',
+    type: 'Bulb',
+    height: '10–70 cm',
+    origin: 'Central Asia (Turkey, Iran)',
+    light: 'Full sun to partial shade',
+    water: 'Moderate (keep soil moist during growth, dry in dormancy)',
+    soil: 'Well-draining, fertile soil',
+    temp: 'Requires winter chill (12-16 weeks below 55°F/13°C)',
+    propagation: 'Bulb division, seeds (takes 5-8 years to flower)',
+    uses: 'Ornamental, cut flowers, formerly used as food source in wartime',
+    toxicity: 'Toxic to cats, dogs, and horses if ingested (especially bulbs)',
+    careTips: 'Plant bulbs in fall 6-8 inches deep, fertilize when planting, deadhead flowers but leave foliage until yellow',
+    season: 'Spring blooming (March-May depending on climate)',
+    funFacts: 'During the 17th century "Tulip Mania" in Holland, some tulip bulbs were worth more than houses. There are now over 3,000 registered varieties.',
+    img: 'aa.jpg',
+    desc: 'Spring-blooming bulb with vibrant cup-shaped flowers. Available in nearly every color except true blue, tulips are one of the most recognizable spring flowers.'
+  },
+  sunflower: {
+    name: 'Sunflower',
+    key: 'sunflower',
+    sci: 'Helianthus annuus',
+    family: 'Asteraceae',
+    type: 'Annual',
+    height: '1.5–3.5 m (dwarf varieties 1-2 ft)',
+    origin: 'North America',
+    light: 'Full sun (at least 6-8 hours daily)',
+    water: 'Water deeply once a week; more often in extreme heat or dry conditions',
+    soil: 'Average to rich, well-draining soil',
+    temp: '70-78°F (21-26°C) ideal, tolerates heat well',
+    propagation: 'Seeds (direct sow after last frost)',
+    uses: 'Ornamental, edible seeds, oil production, bird feed',
+    toxicity: 'Non-toxic, seeds are edible for humans and pets',
+    careTips: 'Support tall varieties, deadhead smaller branching varieties to encourage more blooms, harvest mature heads for seeds',
+    season: 'Blooms from mid-summer to early fall, depending on planting time and variety',
+    funFacts: 'Sunflowers exhibit heliotropism - young flowers track the sun from east to west during the day. Each "flower" is actually hundreds of small flowers (florets).',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg',
+    desc: 'Tall annual with large seed heads that follow the sun. Known for their cheerful appearance and edible seeds, sunflowers are also important crops for oil and birdseed.'
+  }
+};
+
+/* DOM References */
+const imageModal = document.getElementById('imageModal');
+const previewImg = document.getElementById('previewImg');
+const closeImageModal = document.getElementById('closeImageModal');
+const input = document.getElementById('searchInput');
+const btn = document.getElementById('searchBtn');
+const suggestWrap = document.getElementById('suggest');
+const suggestList = document.getElementById('suggestList');
+const quoteEl = document.getElementById('plantQuote');
+const spinner = document.getElementById('quoteSpinner');
+const plantModal = document.getElementById('plantModal');
+const favModal = document.getElementById('favModal');
+const allModal = document.getElementById('allModal');
+const tipEl = document.getElementById('tip');
+const searchContainer = document.getElementById('searchContainer');
+const mainNav = document.getElementById('mainNav');
+const plantImg = document.getElementById('plantImg');
+const titleE = document.getElementById('plantTitle');
+const descE = document.getElementById('plantDesc');
+const sciE = document.getElementById('plantSci');
+const familyE = document.getElementById('plantFamily');
+const typeE = document.getElementById('plantType');
+const originE = document.getElementById('plantOrigin');
+const lightE = document.getElementById('plantLight');
+const waterE = document.getElementById('plantWater');
+const soilE = document.getElementById('plantSoil');
+const tempE = document.getElementById('plantTemp');
+const propagationE = document.getElementById('plantPropagation');
+const usesE = document.getElementById('plantUses');
+const toxicityE = document.getElementById('plantToxicity');
+const careTipsE = document.getElementById('plantCareTips');
+const seasonE = document.getElementById('plantSeason');
+const funFactsE = document.getElementById('plantFunFacts');
+const favBtn = document.getElementById('favBtn');
+const shareBtn = document.getElementById('shareBtn');
+const wikiBtn = document.getElementById('wikiBtn');
+const allPlantsBtn = document.getElementById('allPlantsBtn');
+const favListBtn = document.getElementById('favListBtn');
+const favGrid = document.getElementById('favGrid');
+const allGrid = document.getElementById('allGrid');
+const closeFav = document.getElementById('closeFav');
+const closeAll = document.getElementById('closeAll');
+const closeModalBtn = document.getElementById('closeModal');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+/* Helpers */
+function openDialog(d) {
+  try {
+    d.showModal();
+    d.setAttribute('aria-hidden', 'false');
+  } catch (e) {
+    d.setAttribute('open', '');
+    d.setAttribute('aria-hidden', 'false');
+  }
+}
+
+function closeDialog(d) {
+  try {
+    d.close();
+    d.setAttribute('aria-hidden', 'true');
+  } catch (e) {
+    d.removeAttribute('open');
+    d.setAttribute('aria-hidden', 'true');
+  }
+}
+
+/* Mobile Menu Toggle */
+function toggleMobileMenu() {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+  if (hamburger.classList.contains('active')) {
+    hamburger.querySelector('span:nth-child(1)').style.transform = 'rotate(45deg) translate(5px, 5px)';
+    hamburger.querySelector('span:nth-child(2)').style.opacity = '0';
+    hamburger.querySelector('span:nth-child(3)').style.transform = 'rotate(-45deg) translate(7px, -6px)';
+  } else {
+    hamburger.querySelectorAll('span').forEach(span => {
+      span.style.transform = '';
+      span.style.opacity = '';
+    });
+  }
+}
+
+hamburger.addEventListener('click', toggleMobileMenu);
+
+document.addEventListener('click', (e) => {
+  if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+    if (mobileMenu.classList.contains('active')) {
+      toggleMobileMenu();
+    }
+  }
+});
+
+/* Responsive Nav */
+function handleResponsiveNav() {
+  if (window.innerWidth <= 640) {
+    mainNav.style.display = 'none';
+    hamburger.style.display = 'block';
+  } else {
+    mainNav.style.display = 'flex';
+    hamburger.style.display = 'none';
+    mobileMenu.classList.remove('active');
+    hamburger.classList.remove('active');
+    hamburger.querySelectorAll('span').forEach(span => {
+      span.style.transform = '';
+      span.style.opacity = '';
+    });
+  }
+}
+
+window.addEventListener('resize', handleResponsiveNav);
+handleResponsiveNav();
+
+/* Suggestions */
+function score(hay, needle) {
+  hay = hay.toLowerCase();
+  needle = (needle || '').toLowerCase().trim();
+  if (!needle) return 0;
+  if (hay === needle) return 100;
+  let s = 0;
+  if (hay.includes(needle)) s += 30;
+  if (hay.startsWith(needle)) s += 20;
+  for (let i = 0, j = 0; i < hay.length; i++) {
+    if (hay[i] === needle[j]) {
+      s += 2;
+      j++;
+      if (j === needle.length) break;
+    }
+  }
+  return s + Math.min(20, needle.length);
+}
+
+function getSuggestions(q) {
+  if (!q) return [];
+  return Object.values(PLANTS)
+    .map(p => ({
+      k: p.key,
+      n: p.name,
+      s: Math.max(
+        score(p.name, q),
+        score(p.sci, q),
+        score(p.family, q),
+        score(p.type, q),
+        score(p.origin, q)
+      )
+    }))
+    .filter(x => x.s > 0)
+    .sort((a, b) => b.s - a.s)
+    .slice(0, 6);
+}
+
+let selIndex = 0;
+
+input.addEventListener('input', e => {
+  const q = e.target.value.trim();
+  const out = getSuggestions(q);
+  suggestList.innerHTML = '';
+  if (!q || !out.length) {
+    suggestWrap.classList.remove('active');
+    suggestWrap.setAttribute('aria-hidden', 'true');
+    return;
+  }
+  out.forEach((o, i) => {
+    const li = document.createElement('li');
+    li.setAttribute('data-key', o.k);
+    li.setAttribute('role', 'option');
+    if (i === 0) li.setAttribute('aria-selected', 'true');
+    li.style.cursor = 'pointer';
+    const plant = PLANTS[o.k];
+    li.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px">
+        <img src="${plant.img}" alt="${plant.name}" style="width:30px;height:30px;object-fit:cover;border-radius:6px">
+        <div>
+          <strong>${plant.name}</strong>
+          <div style="font-size:0.8em;color:var(--muted-2)">${plant.sci} • ${plant.type}</div>
+        </div>
+      </div>
+    `;
+    li.addEventListener('click', () => {
+      input.value = plant.name;
+      openPlant(o.k);
+      suggestWrap.classList.remove('active');
+      suggestWrap.setAttribute('aria-hidden', 'true');
+    });
+    suggestList.appendChild(li);
+  });
+  suggestWrap.classList.add('active');
+  suggestWrap.setAttribute('aria-hidden', 'false');
+  selIndex = 0;
+});
+
+input.addEventListener('keydown', e => {
+  const items = Array.from(suggestList.querySelectorAll('li'));
+  if (!items.length) return;
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    selIndex = (selIndex + 1) % items.length;
+    items.forEach((it, idx) => it.setAttribute('aria-selected', idx === selIndex));
+    items[selIndex].scrollIntoView({ block: 'nearest' });
+  }
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    selIndex = (selIndex - 1 + items.length) % items.length;
+    items.forEach((it, idx) => it.setAttribute('aria-selected', idx === selIndex));
+    items[selIndex].scrollIntoView({ block: 'nearest' });
+  }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const key = items[selIndex] ? items[selIndex].dataset.key : (input.value || '').trim().toLowerCase();
+    if (key) openPlant(key);
+  }
+  if (e.key === 'Escape') {
+    suggestWrap.classList.remove('active');
+    suggestWrap.setAttribute('aria-hidden', 'true');
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!searchContainer.contains(e.target) && !suggestWrap.contains(e.target)) {
+    suggestWrap.classList.remove('active');
+    suggestWrap.setAttribute('aria-hidden', 'true');
+  }
+});
+
+/* Chips */
+Array.from(document.querySelectorAll('.chip')).forEach(c =>
+  c.addEventListener('click', () => {
+    const key = c.dataset.q;
+    if (key && PLANTS[key]) {
+      input.value = PLANTS[key].name;
+      openPlant(key);
+    }
+  })
+);
+
+/* Search */
+btn.addEventListener('click', () => {
+  const q = (input.value || '').trim().toLowerCase();
+  if (!q) {
+    input.animate([
+      { transform: 'translateX(0)' },
+      { transform: 'translateX(-6px)' },
+      { transform: 'translateX(6px)' },
+      { transform: 'translateX(0)' }
+    ], { duration: 260 });
+    return;
+  }
+  const key = PLANTS[q] ? q : Object.keys(PLANTS).find(k =>
+    PLANTS[k].name.toLowerCase() === q ||
+    PLANTS[k].sci.toLowerCase() === q
+  );
+  if (key) {
+    openPlant(key);
+  } else {
+    titleE.textContent = 'No results';
+    descE.textContent = 'Try: Rose, Aloe, Tulip, Sunflower';
+    plantImg.src = 'https://images.unsplash.com/photo-1470167290877-7d5d3446de4c?q=80&w=1600&auto=format&fit=crop';
+    openDialog(plantModal);
+  }
+});
+
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') btn.click();
+});
+
+/* Open Plant Modal */
+function openPlant(key) {
+  const d = PLANTS[key];
+  if (!d) return;
+  titleE.textContent = d.name;
+  descE.textContent = d.desc;
+  plantImg.src = d.img;
+  sciE.textContent = 'Scientific: ' + d.sci;
+  familyE.textContent = 'Family: ' + d.family;
+  typeE.textContent = 'Type: ' + d.type;
+  originE.textContent = d.origin;
+  lightE.textContent = d.light;
+  waterE.textContent = d.water;
+  soilE.textContent = d.soil;
+  tempE.textContent = d.temp;
+  propagationE.textContent = d.propagation;
+  usesE.textContent = d.uses;
+  toxicityE.textContent = d.toxicity;
+  careTipsE.textContent = d.careTips;
+  seasonE.textContent = d.season;
+  funFactsE.textContent = d.funFacts;
+  const favs = getFavs();
+  favBtn.textContent = favs.includes(key) ? 'Remove Favorite' : 'Add to Favorites';
+  favBtn.dataset.key = key;
+  favBtn.onclick = () => toggleFav(key);
+  shareBtn.onclick = () => sharePlant(key, d);
+  wikiBtn.onclick = () => window.open('https://en.wikipedia.org/wiki/' + encodeURIComponent(d.name), '_blank');
+  plantImg.style.cursor = 'pointer';
+  plantImg.onclick = () => openImageModal(d.img, d.name + ' image');
+  document.querySelector('.result-body').scrollTop = 0;
+  openDialog(plantModal);
+  titleE.tabIndex = -1;
+  setTimeout(() => titleE.focus(), 240);
+}
+
+/* Open Image Modal */
+function openImageModal(src, alt) {
+  previewImg.src = src;
+  previewImg.alt = alt;
+  openDialog(imageModal);
+}
+
+function closeImageModalFunc() {
+  imageModal.classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+/* Close Image Modal */
+closeImageModal.addEventListener('click', () => closeDialog(imageModal));
+
+// Add click event to plant image in the result card
+plantImg.addEventListener('click', () => {
+  openImageModal(plantImg.src);
+});
+
+/* Favorites */
+function getFavs() {
+  try {
+    return JSON.parse(localStorage.getItem('plant-favs') || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveFavs(arr) {
+  localStorage.setItem('plant-favs', JSON.stringify(arr));
+}
+
+function toggleFav(key) {
+  const favs = getFavs();
+  const i = favs.indexOf(key);
+  if (i >= 0) {
+    favs.splice(i, 1);
+    saveFavs(favs);
+    renderFavGrid();
+    favBtn.textContent = 'Add to Favorites';
+    showTransient(`${PLANTS[key].name} removed from favorites`);
+    createHeartAnimation(false);
+  } else {
+    favs.push(key);
+    saveFavs(favs);
+    renderFavGrid();
+    favBtn.textContent = 'Remove Favorite';
+    showTransient(`${PLANTS[key].name} added to favorites`);
+    createHeartAnimation(true);
+  }
+}
+
+function createHeartAnimation(isAdding) {
+  const heart = document.createElement('div');
+  heart.className = 'floating-heart';
+  heart.innerHTML = isAdding ? '❤️' : '💔';
+  
+  // Position at the center of the screen instead of relative to button
+  heart.style.left = '50%';
+  heart.style.top = '50%';
+  heart.style.transform = 'translate(-50%, -50%)';
+  
+  document.body.appendChild(heart);
+  
+  // Force reflow to ensure rendering
+  void heart.offsetWidth;
+  
+  // Remove after animation completes
+  setTimeout(() => heart.remove(), 1200);
+}
+
+
+/* Transient Tip */
+function showTransient(text, time = 2500) {
+  tipEl.textContent = text;
+  tipEl.hidden = false;
+  tipEl.style.animation = 'none';
+  void tipEl.offsetWidth;
+  tipEl.style.animation = 'fadeIn 0.3s ease';
+  clearTimeout(window._tipTimeout);
+  window._tipTimeout = setTimeout(() => {
+    tipEl.style.animation = 'fadeIn 0.3s ease reverse forwards';
+    setTimeout(() => tipEl.hidden = true, 300);
+  }, time);
+}
+
+/* Render Favorites Grid */
+function renderFavGrid() {
+  const favs = getFavs();
+  favGrid.innerHTML = '';
+  if (!favs.length) {
+    favGrid.innerHTML = '<div class="list-empty">No favorites yet — add plants from the modal.</div>';
+    return;
+  }
+  favs.forEach(k => {
+    const p = PLANTS[k];
+    const item = document.createElement('div');
+    item.className = 'list-item';
+    const briefInfo = `${p.type} • ${p.family}`;
+    item.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <div class="item-content">
+        <div class="item-title">${p.name}</div>
+        <div class="item-info">${briefInfo}</div>
+        <div class="item-actions">
+          <button class="view-btn">View Plant</button>
+          <button class="heart-btn${favs.includes(k) ? ' favorited' : ''}" data-key="${k}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="${favs.includes(k) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    `;
+    item.querySelector('.view-btn').addEventListener('click', () => {
+      openPlant(k);
+      closeDialog(favModal);
+    });
+    item.querySelector('.heart-btn').addEventListener('click', () => {
+      toggleFav(k);
+      renderFavGrid(); // Re-render to update heart icon
+    });
+    favGrid.appendChild(item);
+  });
+}
+
+/* Render All Plants Grid */
+function renderAllGrid() {
+  allGrid.innerHTML = '';
+  const favs = getFavs();
+  Object.keys(PLANTS)
+    .sort((a, b) => PLANTS[a].name.localeCompare(PLANTS[b].name))
+    .forEach(k => {
+      const p = PLANTS[k];
+      const item = document.createElement('div');
+      item.className = 'list-item';
+      const briefInfo = `${p.type} • ${p.family}`;
+      item.innerHTML = `
+        <img src="${p.img}" alt="${p.name}">
+        <div class="item-content">
+          <div class="item-title">${p.name}</div>
+          <div class="item-info">${briefInfo}</div>
+          <div class="item-actions">
+            <button class="view-btn">View Plant</button>
+            <button class="heart-btn${favs.includes(k) ? ' favorited' : ''}" data-key="${k}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="${favs.includes(k) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `;
+      item.querySelector('.view-btn').addEventListener('click', () => {
+        openPlant(k);
+        closeDialog(allModal);
+      });
+      item.querySelector('.heart-btn').addEventListener('click', () => {
+        toggleFav(k);
+        renderAllGrid(); // Re-render to update heart icon
+      });
+      allGrid.appendChild(item);
+    });
+}
+
+/* Share */
+async function sharePlant(key, d) {
+  const shareUrl = `${location.origin}${location.pathname}?plant=${encodeURIComponent(key)}`;
+  const payload = {
+    title: d.name,
+    text: `${d.name} (${d.sci})\n\n${d.desc}\n\nLearn more on Plantopedia!`,
+    url: shareUrl
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(payload);
+    } else {
+      await navigator.clipboard.writeText(`${payload.text}\n${payload.url}`);
+      showTransient('Plant details copied to clipboard');
+    }
+  } catch (e) {
+    showTransient('Unable to share');
+  }
+}
+
+/* Quotes */
+async function fetchQuote() {
+  spinner.style.display = 'inline-block';
+  try {
+    const response = await fetch('quotes.json');
+    if (!response.ok) throw new Error('Failed to fetch quotes');
+    const data = await response.json();
+    const quotes = data.quotes;
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteEl.textContent = randomQuote.quote + (randomQuote.author ? ' — ' + randomQuote.author : '');
+    localStorage.setItem('plant-quote', JSON.stringify({
+      t: Date.now(),
+      q: quoteEl.textContent
+    }));
+  } catch (e) {
+    const cached = JSON.parse(localStorage.getItem('plant-quote') || 'null');
+    if (cached) quoteEl.textContent = cached.q;
+    else quoteEl.textContent = "Plants are the earth's poetry. — Unknown";
+  } finally {
+    spinner.style.display = 'none';
+  }
+}
+
+/* Animate Search */
+input.addEventListener('focus', () => {
+  searchContainer.classList.add('active');
+  const q = input.value.trim();
+  if (q) {
+    const out = getSuggestions(q);
+    if (out.length) {
+      suggestWrap.classList.add('active');
+      suggestWrap.setAttribute('aria-hidden', 'false');
+    }
+  }
+});
+
+input.addEventListener('blur', () => {
+  setTimeout(() => {
+    if (!suggestList.contains(document.activeElement)) {
+      suggestWrap.classList.remove('active');
+      suggestWrap.setAttribute('aria-hidden', 'true');
+    }
+  }, 200);
+});
+
+/* Event Listeners */
+allPlantsBtn.addEventListener('click', () => {
+  renderAllGrid();
+  openDialog(allModal);
+});
+
+favListBtn.addEventListener('click', () => {
+  renderFavGrid();
+  openDialog(favModal);
+});
+
+document.getElementById('mobileAllPlants').addEventListener('click', () => {
+  renderAllGrid();
+  openDialog(allModal);
+  toggleMobileMenu();
+});
+
+document.getElementById('mobileFavorites').addEventListener('click', () => {
+  renderFavGrid();
+  openDialog(favModal);
+  toggleMobileMenu();
+});
+
+closeModalBtn.addEventListener('click', () => closeDialog(plantModal));
+closeFav.addEventListener('click', () => closeDialog(favModal));
+closeAll.addEventListener('click', () => closeDialog(allModal));
+
+/* Accessibility */
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    [plantModal, favModal, allModal].forEach(d => closeDialog(d));
+    if (mobileMenu.classList.contains('active')) {
+      toggleMobileMenu();
+    }
+    if (imageModal.classList.contains('active')) {
+      closeImageModalFunc();
+    }
+  }
+});
+
+/* Handle URL parameters on page load */
+function handleInitialPlant() {
+  const params = new URLSearchParams(window.location.search);
+  const plantKey = params.get('plant');
+  if (plantKey && PLANTS[plantKey]) {
+    openPlant(plantKey);
+    window.history.replaceState({}, document.title, location.pathname);
+  }
+}
+
+// ===== CHATBOT FUNCTIONALITY =====
+    const chatbotBtn = document.getElementById('chatbotBtn');
+    const chatbotModal = document.getElementById('chatbotModal');
+    const closeChat = document.getElementById('closeChat');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendMessageBtn = document.getElementById('sendMessage');
+    
+    // Toggle chatbot modal
+    chatbotBtn.addEventListener('click', () => {
+      chatbotModal.classList.toggle('active');
+      if (chatbotModal.classList.contains('active')) {
+        chatInput.focus();
+      }
+    });
+    
+    closeChat.addEventListener('click', () => {
+      chatbotModal.classList.remove('active');
+    });
+    
+    // Send message function
+    function sendMessage() {
+      const message = chatInput.value.trim();
+      if (!message) return;
+      
+      // Add user message to chat
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Show typing indicator
+      showTypingIndicator();
+      
+      // Process message (this would call your serverless function)
+      processMessage(message);
+    }
+    
+    // Send message on button click or Enter key
+    sendMessageBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+    
+    // Add message to chat
+    function addMessage(text, sender) {
+      const messageEl = document.createElement('div');
+      messageEl.classList.add('message', sender);
+      messageEl.textContent = text;
+      chatMessages.appendChild(messageEl);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Show typing indicator
+    function showTypingIndicator() {
+      const typingEl = document.createElement('div');
+      typingEl.classList.add('typing-indicator');
+      typingEl.innerHTML = `
+        <span>Plant Assistant is typing</span>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      `;
+      typingEl.id = 'typingIndicator';
+      chatMessages.appendChild(typingEl);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Remove typing indicator
+    function removeTypingIndicator() {
+      const typingEl = document.getElementById('typingIndicator');
+      if (typingEl) {
+        typingEl.remove();
+      }
+    }
+    
+    // // Process message - This is where you would call your serverless function
+    // async function processMessage(message) {
+    //   // In a real implementation, you would call your serverless function here
+    //   // For demonstration, we'll use a simple mock response
+      
+    //   // Check if message is plant-related
+    //   const plantKeywords = ['plant', 'garden', 'flower', 'tree', 'leaf', 'soil', 'water', 'sunlight', 
+    //     'prune', 'fertiliz', 'bloom', 'rose', 'tulip', 'cactus', 'herb', 'vegetable', 'seed', 'pot', 
+    //     'grow', 'care', 'toxic', 'pet', 'sun', 'shade', 'indoor', 'outdoor', 'watering', 'drainage'];
+      
+    //   const isPlantRelated = plantKeywords.some(keyword => 
+    //     message.toLowerCase().includes(keyword)
+    //   );
+      
+    //   // Simulate API call delay
+    //   await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+      
+    //   removeTypingIndicator();
+      
+    //   if (!isPlantRelated) {
+    //     addMessage("I'm here to help with plant-related questions only. Please ask me about plants, gardening, or plant care.", 'bot');
+    //     return;
+    //   }
+      
+    //   // Mock responses for demonstration
+    //   const responses = [
+    //     "For optimal growth, make sure your plant gets the right amount of sunlight and water according to its specific needs.",
+    //     "That plant prefers well-draining soil and moderate watering. Be careful not to overwater!",
+    //     "Most plants benefit from regular pruning to remove dead or damaged foliage and encourage new growth.",
+    //     "The best time to plant is during the growing season, typically spring or early fall.",
+    //     "Consider using organic fertilizer to provide essential nutrients without harsh chemicals.",
+    //     "Make sure your plant is in a pot with drainage holes to prevent root rot.",
+    //     "Different plants have different light requirements - some thrive in direct sun while others prefer shade.",
+    //     "Regularly check your plants for signs of pests or disease, and treat early if needed.",
+    //     "Watering needs vary by plant type, season, and environment. Always check soil moisture before watering.",
+    //     "Many houseplants benefit from increased humidity, especially during winter months."
+    //   ];
+      
+    //   const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    //   addMessage(randomResponse, 'bot');
+    // }
+    
+
+
+    // In a real implementation, you would replace the processMessage function with:
+    
+    async function processMessage(message) {
+      try {
+        // This would be your serverless function endpoint
+        const response = await fetch('/.netlify/functions/chatbot', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        removeTypingIndicator();
+        addMessage(data.reply, 'bot');
+      } catch (error) {
+        removeTypingIndicator();
+        addMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'bot');
+        console.error('Error:', error);
+      }
+    }
+
+
+
+
+/* Init */
+fetchQuote();
+setInterval(fetchQuote, 20000);
+quoteEl.addEventListener('click', fetchQuote);
+renderFavGrid();
+renderAllGrid();
+handleInitialPlant();
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+   </script>
+   
+
+    
+</body>
+
+</html>
