@@ -2337,7 +2337,7 @@ function handleInitialPlant() {
     async function processMessage(message) {
       try {
         // This would be your serverless function endpoint
-        const response = await fetch('/.netlify/functions/chatbot', {
+        const response = await fetch('/.netlify/functions/chatgpt', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
